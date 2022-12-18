@@ -1,0 +1,192 @@
+<div class="container-xl">
+  <div class="table-responsive">
+    <div class="table-wrapper">
+      <div class="table-title">
+        <div class="row">
+          <div class="col-sm-6">
+            <h4><b>New Parcel</b></h4>
+          </div>
+          <div class="col-sm-6">
+            <a href="#" routerLink="/Home" class="btn btn-success back"
+              ><i class="fas fa-arrow-circle-left"></i> Back</a
+            >
+          </div>
+        </div>
+      </div>
+      <form #parcelForm="ngForm">
+        <div class="table-content">
+          <div class="form-group p-10 row my-4">
+            <div class="col-sm-3">
+              <label for="sku" class="p-t-b-10"
+                >Parcel SKU<span class="requiredStar">*</span></label
+              >
+            </div>
+            <div class="col-sm-9">
+              <input
+                type="text"
+                class="form-control"
+                id="sku"
+                required
+                maxlength="255"
+                [(ngModel)]="addParcelForm.sku"
+                name="sku"
+                #sku="ngModel"
+                placeholder="Enter a unique SKU"
+              />
+              <div
+                *ngIf="sku.errors && isSubmitted"
+                class="alert alert-danger validationError"
+              >
+                <div [hidden]="!sku.errors?.['required']">SKU is required</div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group p-10 row my-4">
+            <div class="col-sm-3">
+              <label class="p-t-b-10"
+                >Description<span class="requiredStar">*</span></label
+              >
+            </div>
+            <div class="col-sm-9">
+              <textarea
+                class="form-control"
+                id="description"
+                required
+                [(ngModel)]="addParcelForm.description"
+                name="description"
+                minlength="3"
+                placeholder="Description should be longer than 3 characters"
+                #description="ngModel"
+              ></textarea>
+              <div
+                *ngIf="description.errors && isSubmitted"
+                class="alert alert-danger validationError"
+              >
+                <div [hidden]="!description.errors?.['required']">
+                  Description is required
+                </div>
+                <div [hidden]="!description.errors?.['minlength']">
+                  Input must be at least 3 characters.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group p-10 row my-4">
+            <div class="col-sm-3">
+              <label for="streetAddress" class="p-t-b-10"
+                >Street Address<span class="requiredStar">*</span></label
+              >
+            </div>
+            <div class="col-sm-9">
+              <input
+                type="text"
+                class="form-control"
+                id="streetAddress"
+                required
+                [(ngModel)]="addParcelForm.streetAddress"
+                name="streetAddress"
+                #streetAddress="ngModel"
+              />
+              <div
+                *ngIf="streetAddress.errors && isSubmitted"
+                class="alert alert-danger validationError"
+              >
+                <div [hidden]="!streetAddress.errors?.['required']">
+                  Street address is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group p-10 row my-4">
+            <div class="col-sm-3">
+              <label for="town" class="p-t-b-10"
+                >Town<span class="requiredStar">*</span></label
+              >
+            </div>
+            <div class="col-sm-9">
+              <input
+                type="text"
+                class="form-control"
+                id="town"
+                required
+                [(ngModel)]="addParcelForm.town"
+                name="town"
+                #town="ngModel"
+              />
+              <div
+                *ngIf="town.errors && isSubmitted"
+                class="alert alert-danger validationError"
+              >
+                <div [hidden]="!town.errors?.['required']">
+                  Town is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group p-10 row my-4">
+            <div class="col-sm-3">
+              <label for="country" class="p-t-b-10"
+                >Country<span class="requiredStar">*</span></label
+              >
+            </div>
+            <div class="col-sm-9">
+              <select
+                class="form-select"
+                id="country"
+                [(ngModel)]="addParcelForm.country"
+                #country="ngModel"
+                name="country"
+                required
+              >
+                <option value="">-- Select a country --</option>
+                <option *ngFor="let country of countryList" [value]="country">
+                  {{ country }}
+                </option>
+              </select>
+              <div
+                *ngIf="country.errors && isSubmitted"
+                class="alert alert-danger validationError"
+              >
+                Please select a country.
+              </div>
+            </div>
+          </div>
+          <div class="form-group p-10 row my-4">
+            <div class="col-sm-3">
+              <label for="deliveryDate" class="p-t-b-10"
+                >Delivery Date<span class="requiredStar">*</span></label
+              >
+            </div>
+            <div class="col-sm-4">
+              <input
+                type="date"
+                class="form-control"
+                id="deliveryDate"
+                required
+                [(ngModel)]="addParcelForm.deliveryDate"
+                name="deliveryDate"
+                #deliveryDate="ngModel"
+              />
+              <div
+                *ngIf="deliveryDate.errors && isSubmitted"
+                class="alert alert-danger validationError"
+              >
+                <div [hidden]="!deliveryDate.errors?.['required']">
+                  Delivery date is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="table-footer">
+            <button
+              class="btn btn-success"
+              (click)="AddParcel(parcelForm.form.valid)"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

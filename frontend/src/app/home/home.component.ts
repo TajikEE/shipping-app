@@ -2,7 +2,7 @@ import { Component, Input, OnInit, Type, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpProviderService } from '../Service/http-provider.service';
 import { NgForm } from '@angular/forms';
-
+import * as _ from 'underscore';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -20,6 +20,15 @@ export class HomeComponent implements OnInit {
   filters = ['country', 'description'];
 
   onSelectedFilterChange() {
+    if (this.addFilterParcelForm.selectedFilter === 'description') {
+      if (
+        this.addFilterParcelForm.searchTerm &&
+        this.addFilterParcelForm.searchTerm.length < 3
+      ) {
+        return;
+      }
+    }
+
     this.httpProvider
       .getFilteredParcels(this.addFilterParcelForm)
       .subscribe((data: any) => {
@@ -34,7 +43,9 @@ export class HomeComponent implements OnInit {
   constructor(
     private router: Router,
     private httpProvider: HttpProviderService
-  ) {}
+  ) {
+    this.onSelectedFilterChange = _.debounce(this.onSelectedFilterChange, 500);
+  }
 
   ngOnInit(): void {
     this.getParcels();

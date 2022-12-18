@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Like, Repository } from 'typeorm';
+import { Like, Repository, ILike } from 'typeorm';
 import Parcel from './parcel.entity';
 import { ParcelDto } from './dto/parcel.dto';
 
@@ -48,13 +48,13 @@ export class ParcelService {
     if (filter.selectedFilter === 'country') {
       parcels = await this.parcelRepository.find({
         where: {
-          [filter.selectedFilter]: Like(`%${filter.searchTerm}%`),
+          country: filter.searchTerm,
         },
       });
     } else if (filter.selectedFilter === 'description') {
       parcels = await this.parcelRepository.find({
         where: {
-          description: Like(`%${filter.searchTerm}%`),
+          description: ILike(`%${filter.searchTerm}%`),
         },
       });
     }

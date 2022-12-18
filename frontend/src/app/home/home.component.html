@@ -79,7 +79,7 @@
                 <td>{{ parcel.street_address }}</td>
                 <td>{{ parcel.town }}</td>
                 <td>{{ parcel.country }}</td>
-                <td>{{ parcel.delivery_date }}</td>
+                <td>{{ parcel.delivery_date | date : "dd/MM/yyyy" }}</td>
               </tr>
               <tr>
                 <td *ngIf="parcelList.length == 0" colspan="6">

@@ -1,8 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Like, Repository, ILike } from 'typeorm';
 import Parcel from './parcel.entity';
 import { ParcelDto } from './dto/parcel.dto';
+import { DB_ERROR_CODES } from 'src/constants/db-error-codes';
+import { CreateParcelRes } from './dto/create-parcel-res';
 
 const HOME_COUNTRY = 'Estonia' as const;
 @Injectable()
@@ -30,17 +36,28 @@ export class ParcelService {
     return parcels;
   }
 
-  async createParcel(parcel: ParcelDto) {
-    const newParcel = await this.parcelRepository.create({
-      sku: parcel.sku,
-      description: parcel.description,
-      street_address: parcel.streetAddress,
-      town: parcel.town,
-      country: parcel.country,
-      delivery_date: parcel.deliveryDate,
-    });
-    await this.parcelRepository.save(newParcel);
-    return newParcel;
+  async createParcel(parcel: ParcelDto): Promise<CreateParcelRes> {
+    try {
+      const newParcel = await this.parcelRepository.create({
+        sku: parcel.sku,
+        description: parcel.description,
+        street_address: parcel.streetAddress,
+        town: parcel.town,
+        country: parcel.country,
+        delivery_date: parcel.deliveryDate,
+      });
+      await this.parcelRepository.save(newParcel);
+      return {
+        message: 'Parcel created successfully',
+        statusCode: 201,
+      };
+    } catch (error) {
+      if (error.code === DB_ERROR_CODES.DUPLICATE_KEY) {
+        throw new ConflictException('Parcel with this SKU already exists');
+      } else {
+        throw new InternalServerErrorException();
+      }
+    }
   }
 
   async getFilteredParcels(filter: any): Promise<Parcel[]> {

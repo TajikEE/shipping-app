@@ -3,6 +3,7 @@ import { ParcelService } from './parcel.service';
 import { ParcelDto } from './dto/parcel.dto';
 import Parcel from './parcel.entity';
 import { FilterDto } from './dto/filter.dto';
+import { CreateParcelRes } from './dto/create-parcel-res';
 
 @Controller('/api/parcels')
 export class ParcelController {
@@ -14,7 +15,7 @@ export class ParcelController {
   }
 
   @Post()
-  createParcel(@Body() parcel: ParcelDto): Promise<Parcel> {
+  createParcel(@Body() parcel: ParcelDto): Promise<CreateParcelRes> {
     return this.parcelService.createParcel(parcel);
   }
 

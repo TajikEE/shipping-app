@@ -5,7 +5,7 @@ import Parcel from './parcel.entity';
 import { FilterDto } from './dto/filter.dto';
 import { CreateParcelRes } from './dto/create-parcel-res';
 
-@Controller('/api/parcels')
+@Controller('/parcels')
 export class ParcelController {
   constructor(private readonly parcelService: ParcelService) {}
 

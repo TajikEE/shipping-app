@@ -4,10 +4,10 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Like, Repository, ILike } from 'typeorm';
+import { Repository, ILike } from 'typeorm';
 import Parcel from './parcel.entity';
 import { ParcelDto } from './dto/parcel.dto';
-import { DB_ERROR_CODES } from 'src/constants/db-error-codes';
+import { DB_ERROR_CODES } from '../constants/db-error-codes';
 import { CreateParcelRes } from './dto/create-parcel-res';
 
 const HOME_COUNTRY = 'Estonia' as const;
@@ -55,6 +55,7 @@ export class ParcelService {
       if (error.code === DB_ERROR_CODES.DUPLICATE_KEY) {
         throw new ConflictException('Parcel with this SKU already exists');
       } else {
+        console.log(error);
         throw new InternalServerErrorException();
       }
     }

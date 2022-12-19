@@ -12,7 +12,7 @@ import { ParcelModule } from './parcel/parcel.module';
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: 'test',
+      password: 'postgres',
       database: 'postgres',
       entities: [Parcel],
       synchronize: true,

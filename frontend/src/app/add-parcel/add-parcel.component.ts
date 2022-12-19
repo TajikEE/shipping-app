@@ -28,12 +28,10 @@ export class AddParcelComponent implements OnInit {
     if (isValid) {
       this.httpProvider.saveParcel(this.addParcelForm).subscribe(
         async (data) => {
-          console.log(data);
           if (data != null && data.body != null) {
             if (data != null && data.body != null) {
-              var resultData = data.body;
+              const resultData = data.body;
               if (resultData != null && resultData.statusCode === 201) {
-                console.log(data);
                 this.toastr.success(resultData.message);
                 setTimeout(() => {
                   this.router.navigate(['/Home']);

@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit {
       .getFilteredParcels(this.addFilterParcelForm)
       .subscribe((data: any) => {
         if (data != null && data.body != null) {
-          var resultData = data.body;
+          const resultData = data.body;
           if (resultData) {
             this.parcelList = resultData;
           }
@@ -54,7 +54,7 @@ export class HomeComponent implements OnInit {
     this.httpProvider.getParcels().subscribe(
       (data: any) => {
         if (data != null && data.body != null) {
-          var resultData = data.body;
+          const resultData = data.body;
           if (resultData) {
             this.parcelList = resultData;
             this.countries = [

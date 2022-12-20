@@ -25,8 +25,6 @@ npm i
 
 3. 
 ```
-docker-compose build
-
 docker-compose up
 ```
 
